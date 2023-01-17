@@ -1,0 +1,3 @@
+wait(0.1) d = game.Players.LocalPlayer Pcf = d.Character.HumanoidRootPart.CFrame for na,f in pairs(game.Teams.Criminals:GetPlayers()) do if f.Name ~= d.Name then local na = 15 repeat wait() na = na-1 game.Workspace.Remote.arrest:InvokeServer(f.Character.HumanoidRootPart) d.Character.HumanoidRootPart.CFrame = f.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1) until na == 0 
+end 
+end
