@@ -1,0 +1,35 @@
+local Knife = game.Players.LocalPlayer.Backpack:FindFirstChild("Crude Knife") or game.Players.LocalPlayer.Character:FindFirstChild("Crude Knife")
+		if not Knife then
+			workspace.Remote.ItemHandler:InvokeServer(workspace["Prison_ITEMS"].single["Crude Knife"].ITEMPICKUP)
+		end
+		wait()
+		Knife = game.Players.LocalPlayer.Backpack:FindFirstChild("Crude Knife") or game.Players.LocalPlayer.Character:FindFirstChild("Crude Knife")
+		if Knife then
+			local Cooldown = false
+			local Hitting = false
+			local Hitted = false
+			Knife.Equipped:Connect(function()
+				Knife.Activated:Connect(function()
+					if not Cooldown then
+						Cooldown = true
+						Hitting = true
+						for i,v in pairs(Knife:GetChildren()) do
+							if v:IsA("Part") then
+								v.Touched:Connect(function(Hit)
+									if Hit and Hit.Parent ~= game.Players.LocalPlayer and not Hitted and Hitting then
+										Hitted = true
+										for i = 1,25 do
+											game.ReplicatedStorage.meleeEvent:FireServer(game.Players[Hit.Parent.Name])
+										end
+									end
+								end)
+							end
+						end
+						wait(0.5)
+						Cooldown = false
+						Hitting = false
+						Hitted = false
+					end
+				end)
+			end)
+		end
